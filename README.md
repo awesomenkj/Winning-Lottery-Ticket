@@ -1,5 +1,5 @@
 # Winning-Lottery-Ticket
-Get the number of winning pairs - Javascript Algorithm
+##Get the number of winning pairs - Javascript Algorithm
 
 
 The SuperBowl Lottery is about to commence, and there are several lottery tickets being sold, and each ticket is identified with a ticket ID. In one of the many winning scenarios in the Superbowl lottery, a winning pair of tickets is:
@@ -27,7 +27,7 @@ Each ticket id consists of digits from [0,9]
 
 Print the number of pairs in a new line.
 
-**Sample Input 0
+**Sample Input 0**
 
 5
 129300455 
@@ -36,11 +36,11 @@ Print the number of pairs in a new line.
 56789
 123456879
 
-**Sample Output 0
+**Sample Output 0**
 
 5
 
-**Explanation 0
+**Explanation 0**
 
 Pairs of distinct tickets that make for a winning scenario are :
 
