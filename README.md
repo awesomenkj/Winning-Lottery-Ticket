@@ -1,5 +1,5 @@
 # Winning-Lottery-Ticket
-##Get the number of winning pairs - Javascript Algorithm
+## Get the number of winning pairs - Javascript Algorithm
 
 
 The SuperBowl Lottery is about to commence, and there are several lottery tickets being sold, and each ticket is identified with a ticket ID. In one of the many winning scenarios in the Superbowl lottery, a winning pair of tickets is:
