@@ -9,7 +9,6 @@ function winningLotteryTicket(tickets) {
             i = 0;
             tickets.shift();
             masks.push(parseInt(mask.join(''), 2));
-            // masks.push(mask.join(''));
             mask = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             continue;
         }
@@ -18,7 +17,7 @@ function winningLotteryTicket(tickets) {
 
     while (masks.length > 1) {
         
-        if (parseInt(masks[0], 2) === 1023) {
+        if (masks[0] === 1023) {
             count = count + masks.length - 1;
             masks.shift();
             i = 1;
