@@ -1,39 +1,39 @@
-function winningLotteryTicket(tickets) {
-    const masks = [];
-    let i = 0, count = 0;
-    let mask = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    
-    while (tickets.length > 0) {    
-        if (tickets[0].includes(`${i}`)) mask[i] = 1; // check if ticket includes i
-        if (i == 9) {
-            i = 0;
-            tickets.shift();
-            masks.push(parseInt(mask.join(''), 2));
-            mask = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            continue;
-        }
-        i ++;
-    }
+// Maximum size of Array - the number of digits is 10(0 ~ 9), so power(2, 10) is 1024.
+const LOOP_LIMIT = 1024;
 
-    while (masks.length > 1) {
-        
-        if (masks[0] === 1023) {
-            count = count + masks.length - 1;
-            masks.shift();
-            i = 1;
-            continue;
+function winningLotteryTicket(tickets) {
+    // (0) ~ (1023), as binary, from 0000000000 - to 1111111111
+    let sum = 0;
+    let countPerDigitsValue = new Array(LOOP_LIMIT).fill(0);
+  
+    tickets.forEach((ticket) => {
+        let digitsValue = 0;
+        for (let i = 0; i < ticket.length; i++) {
+          digitsValue |= (1 << (ticket[i] - '0'));
         }
-        
-        if ((masks[0] | masks[i]) === 1023) count++;
- 
-        if (i == (masks.length - 1)) {
-            i = 1;
-            masks.shift();
-            continue;
-        }
-        i++;
-        
+        countPerDigitsValue[digitsValue]++;
+     });
+
+  /*
+    sumPerDigitsValue[xxxxxxxxxx]:
+    Let suppose that xxxxxxxxx equals to 1011000001
+    i-th value whether 0 or 1 refers that: in case 1, digit i exists, and in case 0, digit i doesnt exist.
+    Therefore, sumPerDigitsValue(1011000001) refers to the count of the tickets that at least have digits 9, 7, 6, and 0.
+  */
+  let sumPerDigitsValue = new Array(LOOP_LIMIT).fill(0);
+  for (let digitsValueI = LOOP_LIMIT - 1; digitsValueI >= 0; digitsValueI--) {
+    for (let digitsValueJ = digitsValueI; digitsValueJ < LOOP_LIMIT; digitsValueJ++) {
+      if ((digitsValueI & digitsValueJ) != digitsValueI) continue;
+      sumPerDigitsValue[digitsValueI] += countPerDigitsValue[digitsValueJ];
     }
-    
-    return count;
+  }
+
+  /*
+    Calculate a total count of given ticket's winning pairs
+  */
+  for (let digitValue = 0; digitValue < LOOP_LIMIT; digitValue++) {
+    const restDigitsValue = (((1 << 10) - 1) ^ digitValue);
+    sum += countPerDigitsValue[digitValue] * sumPerDigitsValue[restDigitsValue];
+  }
+  console.log('Count = ', (sum - countPerDigitsValue[LOOP_LIMIT - 1]) / 2);
 }
